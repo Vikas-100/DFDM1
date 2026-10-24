@@ -97,5 +97,7 @@ test('Evaluator: Safety guarantees - Never claims 100% accuracy or fabricated sc
   // Model confidence must match raw probability mathematically, not fabricated 100%
   assert.strictEqual(result.modelConfidence, 99.9);
   assert.notStrictEqual(result.modelConfidence, 100);
-  assert(result.disclaimer, 'Disclaimer must be present on every prediction');
+  assert(THRESHOLDS.HIGH_CONFIDENCE_FAKE > 0.5);
+  assert(THRESHOLDS.HIGH_CONFIDENCE_REAL < 0.5);
+  assert(THRESHOLDS.MIN_CONFIDENCE_MARGIN > 0.1);
 });

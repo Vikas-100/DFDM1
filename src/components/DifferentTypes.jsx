@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, Video, Mic, ArrowRight, ShieldCheck, Check } from 'lucide-react';
+import { Eye, ArrowRight, Check } from 'lucide-react';
 import { getAssetUrl } from '../utils/assets.js';
 
 export function DifferentTypes({ onSelectType, onOpenComingSoon }) {

@@ -1,7 +1,9 @@
 import React from 'react';
-import { ShieldCheck, ArrowRight, Activity, Globe, ExternalLink } from 'lucide-react';
+import { ShieldCheck, ArrowRight } from 'lucide-react';
 
-export function Footer({ onOpenComingSoon, onOpenAuth }) {
+const CURRENT_YEAR = 2026;
+
+export function Footer({ onOpenComingSoon: _onOpenComingSoon, onOpenAuth }) {
   return (
     <footer className="footer-wrap">
       {/* Pre-Footer CTA Banner matching reference image */}
@@ -104,7 +106,7 @@ export function Footer({ onOpenComingSoon, onOpenAuth }) {
 
           <div className="footer-bottom-bar">
             <p className="copyright-text">
-              © {new Date().getFullYear()} DFD Technologies Inc. All rights reserved. Built for digital integrity.
+              © {CURRENT_YEAR} DFD Technologies Inc. All rights reserved. Built for digital integrity.
             </p>
             <div className="footer-legal-links">
               <a href="#">Privacy Protocol</a>

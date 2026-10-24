@@ -3,13 +3,10 @@ import {
   ShieldCheck, 
   X, 
   Printer, 
-  Download, 
   CheckCircle, 
   AlertTriangle, 
   QrCode, 
-  Copy, 
-  Share2, 
-  Award 
+  Copy
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -22,7 +19,7 @@ export function CertificateModal({ isOpen, onClose, result, sha256Hash }) {
           spread: 60,
           origin: { y: 0.6 }
         });
-      } catch (e) {
+      } catch {
         // ignore if confetti fails
       }
     }
@@ -30,8 +27,8 @@ export function CertificateModal({ isOpen, onClose, result, sha256Hash }) {
 
   if (!isOpen || !result) return null;
 
-  const certId = `VM-${result.id ? result.id.replace('preset-', '').toUpperCase() : 'AUTH'}-${Date.now().toString().slice(-6)}`;
-  const dateStr = new Date().toUTCString();
+  const certId = `VM-${result.id ? result.id.replace('preset-', '').toUpperCase() : 'AUTH'}-${(sha256Hash || result.fileInfo?.sha256 || 'VERIFY').slice(0, 6).toUpperCase()}`;
+  const dateStr = result.timestamp ? new Date(result.timestamp).toUTCString() : 'Verification Session';
 
   const handlePrint = () => {
     window.print();

@@ -4,7 +4,6 @@ import {
   FileText, 
   AlertTriangle, 
   CheckCircle2, 
-  XCircle, 
   Cpu, 
   Layers, 
   Eye, 
@@ -34,8 +33,8 @@ import {
 } from '../utils/forensics';
 
 export function DetectionStudio({ onGenerateCertificate, selectedModality, onOpenComingSoon }) {
-  // Only image detection is functional; video and audio are upcoming
-  const activeTab = 'image';
+  // Image detection is functional; video and audio are upcoming
+  const [_activeTab, setActiveTab] = useState('image');
   const [selectedFile, setSelectedFile] = useState(null);
   const [mediaPreview, setMediaPreview] = useState(SAMPLE_PRESETS[0].src);
   const [sha256Hash, setSha256Hash] = useState('7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069');
@@ -737,7 +736,6 @@ export function DetectionStudio({ onGenerateCertificate, selectedModality, onOpe
                   {(() => {
                     const isManipulated = currentResult.outcomeKey === 'manipulated' || (currentResult.outcomeKey ? false : currentResult.isFake);
                     const isInconclusive = currentResult.outcomeKey === 'inconclusive' || currentResult.isInconclusive;
-                    const isAuthentic = currentResult.outcomeKey === 'authentic' || (!isManipulated && !isInconclusive);
 
                     return (
                       <div className={`verdict-card ${isManipulated ? 'fake-verdict' : isInconclusive ? 'inconclusive-verdict' : 'real-verdict'}`}>

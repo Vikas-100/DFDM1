@@ -2,7 +2,7 @@ import React from 'react';
 import { USE_CASES } from '../data/usecases';
 import { ArrowRight, CheckCircle2, Shield, Sparkles } from 'lucide-react';
 
-export function UseCases({ onSelectPreset }) {
+export function UseCases({ onSelectPreset: _onSelectPreset }) {
   return (
     <section id="use-cases" className="usecases-section section-padding">
       <div className="container">

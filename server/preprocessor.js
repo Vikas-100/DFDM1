@@ -47,7 +47,7 @@ export const VIT_384_CONFIG = {
  * Validates raw file buffer, format, and metadata.
  * Throws descriptive Error if invalid, corrupted, or unsupported.
  */
-export async function validateImageBuffer(buffer, originalFilename = '', mimeType = '') {
+export async function validateImageBuffer(buffer, originalFilename = '', _mimeType = '') {
   // 1. Check for empty upload
   if (!buffer || buffer.length === 0) {
     throw new ValidationError('Upload is empty. Please provide a valid image file.', 'EMPTY_UPLOAD', 400);

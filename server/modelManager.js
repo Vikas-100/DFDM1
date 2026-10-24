@@ -127,7 +127,7 @@ export function resolveModelPath(modelKey = 'deepfake-vit-v2') {
             return full;
           }
         }
-      } catch (e) {
+      } catch {
         // ignore unreadable
       }
       return null;

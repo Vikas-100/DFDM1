@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { 
-  ShieldAlert, 
   ShieldCheck, 
   Star, 
   Upload, 
@@ -8,13 +7,11 @@ import {
   Zap, 
   Eye, 
   Lock, 
-  ArrowRight, 
-  SlidersHorizontal,
-  Layers
+  SlidersHorizontal
 } from 'lucide-react';
 import { getAssetUrl } from '../utils/assets.js';
 
-export function Hero({ onStartInspection, onOpenComingSoon, onOpenAuth }) {
+export function Hero({ onStartInspection: _onStartInspection, onOpenComingSoon: _onOpenComingSoon, onOpenAuth }) {
   // Slider position (percentage 0 - 100)
   const [sliderPos, setSliderPos] = useState(50);
   const [isDragging, setIsDragging] = useState(false);

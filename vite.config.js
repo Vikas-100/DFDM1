@@ -1,37 +1,57 @@
+
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
-// https://vite.dev/config/
 export default defineConfig(async ({ command }) => {
-  const plugins = [react()];
+  const plugins = [react()]
 
-  // Only mount Express API backend middleware during local 'vite' dev server
+  // Load Express API middleware only during local development
   if (command === 'serve') {
     try {
-      const { createServer: createBackendServer } = await import('./server/index.js');
-      const backendApp = createBackendServer();
+      const { createServer: createBackendServer } =
+        await import('./server/index.js')
+
+      const backendApp = createBackendServer()
+
       plugins.push({
         name: 'truthlens-api-plugin',
         configureServer(server) {
           server.middlewares.use((req, res, next) => {
-            if (req.url && req.url.startsWith('/api')) {
-              backendApp(req, res, next);
-            } else {
-              next();
+            // Support both direct '/api' and repo subpath '/Deep-Fake-Detection/api'
+            if (req.url && req.url.startsWith('/Deep-Fake-Detection/api')) {
+              req.url = req.url.replace('/Deep-Fake-Detection', '')
+              backendApp(req, res, next)
+              return
             }
-          });
+            if (req.url && req.url.startsWith('/api')) {
+              backendApp(req, res, next)
+              return
+            }
+            // Seamlessly redirect subpath access to root in local dev
+            if (req.url === '/Deep-Fake-Detection' || req.url === '/Deep-Fake-Detection/') {
+              res.writeHead(302, { Location: '/' })
+              res.end()
+              return
+            }
+            next()
+          })
         }
-      });
+      })
     } catch (e) {
-      console.warn('[Vite Dev] Backend middleware could not be loaded:', e.message);
+      console.warn(
+        '[Vite Dev] Backend middleware could not be loaded:',
+        e.message
+      )
     }
   }
 
   return {
-    base: process.env.VITE_BASE_PATH || '/Deep-Fake-Detection/',
+    // Serve from '/' in dev so localhost:5173 loads instantly without 404s
+    // In build, default to repository subpath '/Deep-Fake-Detection/' for GitHub Pages
+    base: process.env.VITE_BASE_PATH || (command === 'build' ? '/Deep-Fake-Detection/' : '/'),
     plugins,
     server: {
       port: 5173
     }
-  };
-});
+  }
+})

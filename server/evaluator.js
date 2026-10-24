@@ -127,7 +127,7 @@ export function evaluatePrediction({
 /**
  * Compiles real forensic feature inspection entries based on genuine model outputs
  */
-function generateFeatureReport({ outcomeKey, pFake, pReal, imageMetadata, elaMetrics }) {
+function generateFeatureReport({ outcomeKey, pFake, pReal, imageMetadata, elaMetrics: _elaMetrics }) {
   const isManipulated = outcomeKey === 'manipulated';
   const isInconclusive = outcomeKey === 'inconclusive';
 

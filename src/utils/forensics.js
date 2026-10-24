@@ -443,7 +443,7 @@ export async function analyzeUploadedMedia(file, previewDataUrl, forcedMode = 'a
         method: 'POST',
         body: formData
       });
-    } catch (netErr) {
+    } catch {
       throw new Error(
         `Unable to connect to TruthLens AI detection server at "${detectEndpoint}". ` +
         `GitHub Pages is a static host and cannot execute the Node.js Express backend or ONNX neural network models. ` +
@@ -464,7 +464,7 @@ export async function analyzeUploadedMedia(file, previewDataUrl, forcedMode = 'a
           if (errorJson && errorJson.error) {
             errMessage = errorJson.error;
           }
-        } catch (e) {
+        } catch {
           // ignore JSON parse error
         }
       }
@@ -577,7 +577,7 @@ export async function analyzeUploadedMedia(file, previewDataUrl, forcedMode = 'a
 
   // 2. Modality-specific inspection
   let elaVariance = 0;
-  let isSquareAiDim = false;
+  let _isSquareAiDim = false;
   let audioJitterScore = 0.85; // baseline human jitter %
   let videoMotionDiscontinuity = 0;
 
@@ -596,7 +596,7 @@ export async function analyzeUploadedMedia(file, previewDataUrl, forcedMode = 'a
             (w === 1152 && h === 896) ||
             (w === 1024 && h === 1792)
           ) {
-            isSquareAiDim = true;
+            _isSquareAiDim = true;
           }
 
           const canvas = document.createElement('canvas');
@@ -633,7 +633,7 @@ export async function analyzeUploadedMedia(file, previewDataUrl, forcedMode = 'a
         img.onerror = () => resolve();
         img.src = previewDataUrl;
       });
-    } catch (e) {
+    } catch {
       // ignore
     }
   } else if (detectedType === 'audio') {
@@ -656,7 +656,7 @@ export async function analyzeUploadedMedia(file, previewDataUrl, forcedMode = 'a
         audioJitterScore = (zeroCrossings / 44100) * 100;
         audioCtx.close();
       }
-    } catch (e) {
+    } catch {
       // fallback
     }
   } else if (detectedType === 'video') {

@@ -7,16 +7,14 @@ import {
   HelpCircle, 
   Menu, 
   X, 
-  ArrowRight,
-  UserPlus,
-  LogIn,
-  LogOut,
-  User,
-  CheckCircle,
+  UserPlus, 
+  LogIn, 
+  LogOut, 
+  CheckCircle, 
   ChevronDown
 } from 'lucide-react';
 
-export function Navbar({ onOpenStudio, onOpenComingSoon, onOpenAuth, currentUser, onSignOut }) {
+export function Navbar({ onOpenStudio, onOpenComingSoon: _onOpenComingSoon, onOpenAuth, currentUser, onSignOut }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);

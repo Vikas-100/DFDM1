@@ -8,9 +8,7 @@ import {
   FileCheck, 
   ArrowRight,
   Layers,
-  Sparkles,
-  Zap,
-  Lock
+  Zap
 } from 'lucide-react';
 
 export function HowItWorks() {

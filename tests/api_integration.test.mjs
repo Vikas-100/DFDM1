@@ -1,8 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert';
 import http from 'http';
-import fs from 'fs';
-import path from 'path';
 import sharp from 'sharp';
 import { createServer } from '../server/index.js';
 

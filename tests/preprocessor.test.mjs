@@ -111,3 +111,16 @@ test('Preprocessor: Correctly resizes, converts RGB, and normalizes for ViT-224'
     assert(val >= -2.0 && val <= 2.0, `Normalized value ${val} should be in reasonable range`);
   }
 });
+
+test('Preprocessor: Correctly resizes, converts RGB, and normalizes for ViT-384', async () => {
+  const rgbaBuffer = await sharp({
+    create: { width: 500, height: 400, channels: 4, background: { r: 100, g: 150, b: 200, alpha: 0.9 } }
+  }).png().toBuffer();
+
+  const result = await preprocessForViT384(rgbaBuffer);
+
+  // Check tensor dimensions [1, 3, 384, 384]
+  assert.deepStrictEqual(result.dims, [1, 3, 384, 384]);
+  assert.strictEqual(result.floatData.length, 3 * 384 * 384);
+  assert(Number.isFinite(result.floatData[0]));
+});

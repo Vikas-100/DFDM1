@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { DetectionStudio } from './components/DetectionStudio';
@@ -23,7 +23,7 @@ export default function App() {
     try {
       const stored = localStorage.getItem('truthlens_user');
       return stored ? JSON.parse(stored) : null;
-    } catch (e) {
+    } catch {
       return null;
     }
   });
@@ -76,7 +76,7 @@ export default function App() {
   const handleSignOut = () => {
     try {
       localStorage.removeItem('truthlens_user');
-    } catch (e) {}
+    } catch {}
     setCurrentUser(null);
   };
 

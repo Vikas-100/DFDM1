@@ -42,6 +42,9 @@ test('ModelManager: Sigmoid converts scalar logit to probability in [0, 1]', () 
 });
 
 test('ModelManager: Loads verified pretrained ONNX model from repository', async () => {
+  assert(MODEL_REGISTRY['deepfake-vit-v2'], 'MODEL_REGISTRY must contain deepfake-vit-v2');
+  assert(MODEL_REGISTRY['community-forensics-vit'], 'MODEL_REGISTRY must contain community-forensics-vit');
+
   const { session, config } = await getInferenceSession('deepfake-vit-v2');
   assert(session, 'ONNX Inference session must be created');
   assert.strictEqual(config.id, 'deepfake-vit-v2');

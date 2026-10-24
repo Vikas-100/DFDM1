@@ -11,13 +11,13 @@ import {
   ArrowRight, 
   CheckCircle2, 
   Briefcase,
-  Zap,
   Check
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export function SignUpModal({ isOpen, onClose, initialMode = 'signup', onAuthSuccess }) {
   const [mode, setMode] = useState(initialMode); // 'signup' | 'signin'
+  const [prevProps, setPrevProps] = useState({ isOpen, initialMode });
   const [showPassword, setShowPassword] = useState(false);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -28,11 +28,15 @@ export function SignUpModal({ isOpen, onClose, initialMode = 'signup', onAuthSuc
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  useEffect(() => {
-    setMode(initialMode);
-    setErrorMessage('');
-    setSuccessMessage('');
-  }, [initialMode, isOpen]);
+  // Sync state when modal opens or initialMode changes (official React pattern)
+  if (isOpen !== prevProps.isOpen || initialMode !== prevProps.initialMode) {
+    setPrevProps({ isOpen, initialMode });
+    if (isOpen) {
+      setMode(initialMode);
+      setErrorMessage('');
+      setSuccessMessage('');
+    }
+  }
 
   // Handle ESC key press
   useEffect(() => {
@@ -105,7 +109,7 @@ export function SignUpModal({ isOpen, onClose, initialMode = 'signup', onAuthSuc
 
       try {
         localStorage.setItem('truthlens_user', JSON.stringify(userObject));
-      } catch (err) {
+      } catch {
         // ignore localStorage errors
       }
 
@@ -116,7 +120,7 @@ export function SignUpModal({ isOpen, onClose, initialMode = 'signup', onAuthSuc
           spread: 70,
           origin: { y: 0.6 }
         });
-      } catch (e) {
+      } catch {
         // ignore if confetti fails
       }
 
@@ -144,11 +148,11 @@ export function SignUpModal({ isOpen, onClose, initialMode = 'signup', onAuthSuc
     };
     try {
       localStorage.setItem('truthlens_user', JSON.stringify(demoUser));
-    } catch (err) {}
+    } catch {}
 
     try {
       confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
-    } catch (e) {}
+    } catch {}
 
     setSuccessMessage('Signed in as Verified Analyst!');
     if (onAuthSuccess) onAuthSuccess(demoUser);
