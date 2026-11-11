@@ -48,7 +48,8 @@ export default defineConfig(async ({ command }) => {
   return {
     // Serve from '/' in dev so localhost:5173 loads instantly without 404s
     // In build, default to repository subpath '/Deep-Fake-Detection/' for GitHub Pages
-    base: process.env.VITE_BASE_PATH || (command === 'build' ? '/Deep-Fake-Detection/' : '/'),
+    // Use '/' for Vercel; override with VITE_BASE_PATH for GitHub Pages if needed
+    base: process.env.VITE_BASE_PATH || '/',
     plugins,
     server: {
       port: 5173

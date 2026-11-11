@@ -23,6 +23,15 @@ Thumbs.db
 uploads/*
 !uploads/.gitkeep
 
-# Logs
-*.log
-npm-debug.log*
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.db
+
+# Models (large binaries)
+models/
+
+# Vercel
+.vercel/
+

@@ -6,9 +6,16 @@ Provides persistent storage for verification scans, forensic reports, and user f
 import sqlite3
 import os
 import json
+import tempfile
 from datetime import datetime
 
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dfd_database.db')
+DB_PATH = os.environ.get('DB_PATH')
+if not DB_PATH:
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    if os.environ.get('VERCEL') or not os.access(base_dir, os.W_OK):
+        DB_PATH = os.path.join(tempfile.gettempdir(), 'dfd_database.db')
+    else:
+        DB_PATH = os.path.join(base_dir, 'dfd_database.db')
 
 def get_db_connection():
     """Establish and return a connection to the SQLite database with dictionary rows."""
