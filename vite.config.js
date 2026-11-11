@@ -8,8 +8,9 @@ export default defineConfig(async ({ command }) => {
   // Load Express API middleware only during local development
   if (command === 'serve') {
     try {
+      const serverPath = './server/index.js'
       const { createServer: createBackendServer } =
-        await import('./server/index.js')
+        await import(/* @vite-ignore */ serverPath)
 
       const backendApp = createBackendServer()
 
